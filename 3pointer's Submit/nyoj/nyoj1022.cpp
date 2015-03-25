@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+#define N 200010
+
+int fa[N];
+int pos[N];
+bool vis[N];
+
+int find(int a)
+{
+    return fa[a] == a? a : fa[a] = find(fa[a]);
+}
+
+void init(int n)
+{
+    for (int i = 0; i < n; i++)
+        fa[i] = i, pos[i] = i;
+}
+
+int main()
+{
+    int n, m, a, b, k;
+    char str[5];
+    int cas = 0;
+    while(scanf("%d%d", &n, &m) != EOF)
+    {
+        init(n);
+        k = n;
+        while(m--)
+        {
+            scanf("%s", str);
+            if (str[0] == 'U')
+            {
+                scanf("%d%d", &a, &b);
+                a = find(pos[a]);
+                b = find(pos[b]);
+                fa[b] = a;
+            }
+            else
+            {
+                scanf("%d", &a);
+                pos[a] = k ++;
+                fa[pos[a]] = pos[a];
+            }
+        }
+        memset(vis, 0, sizeof(vis));
+    	int con = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int x = find(pos[i]);
+            if (vis[x] == 0)
+            {
+                vis[x] = 1;
+                con++;
+            }
+        }
+        printf("Case #%d: %d\n", ++cas, con);
+
+    }
+    return 0;
+}

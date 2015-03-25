@@ -1,0 +1,36 @@
+#include<stdio.h>
+#define M 1000000007
+int vis[9900000];
+
+int main()
+{
+    int n;
+    long long ans;
+    long long aans;
+    long long last = 1;
+    long long lasta = 1;
+    int lastnum = 1;;
+    while(scanf("%d", &n) != EOF)
+    {
+        if (vis[n])
+        {
+            printf("%d\n", vis[n]);
+            continue;
+        }
+        ans = last;
+        aans = lasta;
+        for (int i = lastnum + 1; i <= n; i++)
+        {
+            ans *= i;
+            ans %= M;
+            aans *= ans;
+            aans %= M;
+            vis[i] = (int)aans;
+        }
+        last = ans;
+        lasta = aans;
+        lastnum = n;
+        printf("%lld\n", aans);
+    }
+    return 0;
+}
