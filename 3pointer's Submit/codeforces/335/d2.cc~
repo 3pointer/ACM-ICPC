@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int N = 100010;
+
+
+vector<pair<int, int> > q;
+vector<pair<int, int> > ans;
+vector<pair<int ,pair<int, int> > >e;
+
+int main(){
+
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < m; i ++){
+        scanf("%d%d", &e[i].first, &e[i].second.first);
+        e[i].second.first*= -1;
+        make_pair(e[i], i);
+    }
+
+    sort(e, e + m);
+
+    int cur = 0;
+    int t = 0;
+    int h = 0;
+    for (int i = 0; i < m; i ++){
+        int ti = e[i].second.second;
+        int tmp = e[i].second.first;
+        if (tmp == -1){
+            ans[i] = {0, ++ cur};
+            if (t < n){
+                for (int j = 1; j < cur; j ++){
+                    q[t ++] = {j, cur};
+                }
+            }
+        } else {
+            if (h == t){
+                cout << -1 << endl;
+                return 0;
+            }
+            ans[i] = q[h ++];
+        }
+    }
+    return 0;
+}
